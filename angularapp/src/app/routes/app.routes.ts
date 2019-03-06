@@ -6,5 +6,6 @@ export const appRoutes: Routes = [
     // basic routes
     { path: '', redirectTo: 'orders', pathMatch: 'full' },
     { path: 'orders', component: OrdersComponent },
-    { path: 'order', component: OrderComponent }
+    { path: 'order/:id', component: OrderComponent },
+    { path: 'addorder', component: OrderComponent }
 ];

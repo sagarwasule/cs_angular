@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class OrdersComponent implements OnInit {
 
   orders: Order[] = [];
+  ordersTodelete: number[] = [];
 
   @ViewChildren(SortableDirective) headers: QueryList<SortableDirective>;
 
@@ -22,7 +23,7 @@ export class OrdersComponent implements OnInit {
     this.orders = this.orderService.getOrders();
   }
 
-  onSort({column, direction}: SortEvent) {
+  onSort({ column, direction }: SortEvent) {
 
     // resetting other headers
     this.headers.forEach(header => {
@@ -43,7 +44,25 @@ export class OrdersComponent implements OnInit {
   }
 
   onAddOrder() {
-    this.router.navigate(['./order']);
+    this.router.navigate(['./addorder']);
+  }
+
+  markForDelete(e, id) {
+    const index = this.ordersTodelete.findIndex(x => x === id);
+    if (e.target.checked && index === -1) {
+      this.ordersTodelete.push(id);
+    } else if (index !== -1) {
+      this.ordersTodelete.splice(index, 1);
+    }
+  }
+
+  onDeleteOrders() {
+    this.ordersTodelete.forEach(element => {
+      const index = this.orders.findIndex(x => x.id === element);
+      this.orders.splice(index, 1);
+    });
+
+    this.ordersTodelete = [];
   }
 
 }

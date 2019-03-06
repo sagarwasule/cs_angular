@@ -3,7 +3,8 @@
     <div class="col">
       <button type="button" class="btn btn-primary mr-1"
         (click)="onAddOrder()">Add Order</button>
-      <button type="button" class="btn btn-primary">Delete Orders</button>
+      <button type="button" class="btn btn-primary"
+        (click)="onDeleteOrders()">Delete Orders</button>
     </div>
   </div>
   <div class="table-responsive">
@@ -39,7 +40,9 @@
             {{ order.id }}
           </th>
           <td>
-            {{ order.account }}
+            <a [routerLink]="['/order', order.id]">
+              {{ order.account }}
+            </a>
           </td>
           <td>
             {{ order.quantity }}
@@ -54,7 +57,7 @@
             {{ order.orderDate | date : 'dd/MMM/yyyy' }}
           </td>
           <td>
-            <input type="checkbox" name="DeleteOrder">
+            <input type="checkbox" name="DeleteOrder" (change)="markForDelete($event, order.id)">
           </td>
         </tr>
       </tbody>
